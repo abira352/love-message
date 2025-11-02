@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Me? 💞</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top, #ffd6e8, #ffb6c1, #ff99cc);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    h2 {
+        color: #ff0066;
+        font-size: 26px;
+        margin-bottom: 20px;
+        z-index: 10;
+    }
+
+    .heart {
+        cursor: pointer;
+        font-size: 70px;
+        transition: transform 0.3s ease;
+    }
+
+    .heart:hover {
+        transform: scale(1.3);
+    }
+
+    .letter {
+        display: none;
+        background-color: white;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        text-align: center;
+        z-index: 5;
+        animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .options {
+        display: none;
+        margin-top: 15px;
+    }
+
+    button {
+        background-color: #ff4081;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #ff66a3;
+    }
+
+    .floating-heart {
+        position: absolute;
+        bottom: 0;
+        color: rgba(255, 0, 102, 0.7);
+        font-size: 20px;
+        animation: floatUp 5s linear infinite;
+    }
+
+    @keyframes floatUp {
+        from {transform: translateY(0) scale(1); opacity: 1;}
+        to {transform: translateY(-100vh) scale(1.5); opacity: 0;}
+    }
+
+    .floating-kiss {
+        position: absolute;
+        bottom: 0;
+        font-size: 22px;
+        animation: floatKiss 6s linear forwards;
+        opacity: 0.8;
+    }
+
+    @keyframes floatKiss {
+        from {transform: translateY(0) scale(1); opacity: 1;}
+        to {transform: translateY(-100vh) scale(1.8); opacity: 0;}
+    }
+
+    .madeby {
+        color: #ff0066;
+        font-size: 18px;
+        margin-top: 10px;
+        opacity: 0;
+        animation: fadeText 3s forwards;
+    }
+
+    @keyframes fadeText {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+</style>
+</head>
+<body>
+
+<h2>Click the heart! 💘</h2>
+<div class="heart" id="heart">❤️</div>
+
+<div class="letter" id="letter">
+    <h3>Dear Crush 💌</h3>
+    <p>
+        Every beat of my heart has your name written on it.  
+        Your smile makes time slow down, your laugh feels like home.  
+        So tell me... do you love me too? 😳💞  
+    </p>
+    <div class="options" id="options">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 😅</button>
+    </div>
+</div>
+
+<audio id="bgMusic">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_31a970b6db.mp3?filename=heartbeat-110511.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const heart = document.getElementById("heart");
+const letter = document.getElementById("letter");
+const options = document.getElementById("options");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const bgMusic = document.getElementById("bgMusic");
+
+heart.addEventListener("click", () => {
+    heart.style.display = "none";
+    document.querySelector("h2").style.display = "none";
+    letter.style.display = "block";
+    bgMusic.play();
+    setTimeout(() => {
+        options.style.display = "block";
+    }, 2000);
+});
+
+noBtn.addEventListener("mouseover", () => {
+    const randomX = Math.random() * (window.innerWidth - 100);
+    const randomY = Math.random() * (window.innerHeight - 100);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+});
+
+yesBtn.addEventListener("click", () => {
+    letter.innerHTML = `
+        <h2 style='color:#ff0066;'>I knew it! 😍💘</h2>
+        <p class='madeby'>Made by Abira for my love 💌</p>
+    `;
+    startKissRain();
+});
+
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.innerHTML = "💖";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}, 500);
+
+function startKissRain() {
+    const emojis = ["💋", "💞", "💖"];
+    for (let i = 0; i < 40; i++) {
+        const kiss = document.createElement("div");
+        kiss.classList.add("floating-kiss");
+        kiss.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        kiss.style.left = Math.random() * 100 + "vw";
+        kiss.style.fontSize = Math.random() * 25 + 20 + "px";
+        kiss.style.animationDelay = Math.random() * 2 + "s";
+        document.body.appendChild(kiss);
+        setTimeout(() => kiss.remove(), 6000);
+    }
+}
+</script>
+
+</body>
+</html>
